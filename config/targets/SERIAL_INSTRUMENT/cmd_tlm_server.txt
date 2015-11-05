@@ -1,4 +1,8 @@
 # This is a segment of the main cmd_tlm_server.txt that will be used with
 # AUTO_INTERFACE_TARGETS or INTERFACE_TARGET
 
-BACKGROUND_TASK simulator_background_task.rb 'COM1' 9600 'NONE' 1 1 1
+INTERFACE SERIAL_INST serial_interface.rb COM8 COM8 128000 NONE 1 1.0 1.0 LENGTH 0 32 0 1 BIG_ENDIAN 0 nil
+  TARGET SERIAL_INSTRUMENT
+
+#BACKGROUND_TASK simulator_background_task.rb 'COM7' 128000 'NONE' 1 1
+BACKGROUND_TASK simulator_background_task.rb
