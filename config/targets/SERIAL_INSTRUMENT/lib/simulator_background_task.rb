@@ -45,7 +45,7 @@ module Cosmos
     # This is the entry point for all background tasks
     def call
       #Create a telemetry generation thread.
-      Thread.new do
+      @telemetryThread = Thread.new do
         while (true)
           #Write the status packet to the serial port
           @serial_port.write(@status_packet.buffer)
@@ -57,7 +57,7 @@ module Cosmos
       end
       
       #Create a command read thread.
-      Thread.new do
+      @commandThread = Thread.new do
         while (true)
           bytesRead = 0
           dataBuff = ''
@@ -100,6 +100,17 @@ module Cosmos
       end #Thread.new do
       
     end #def call
+    
+    def stop
+      @telemetryThread.kill
+      @telemetryThread.join
+      
+      @commandThread.kill
+      @commandThread.join
+      
+      @serial_port.close
+    end
+    
   end #class SimulatorBackgroundTask < BackgroundTask
 
 end #module Cosmos
